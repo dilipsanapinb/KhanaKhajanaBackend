@@ -7,6 +7,7 @@ const passport = require("passport");
 const passportSetup = require("./config/passport-config");
 const authRoute = require("./routes/auth.routes");
 const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
 const cookiesession = require("cookie-session");
 const cors = require("cors");
 const app = express();
