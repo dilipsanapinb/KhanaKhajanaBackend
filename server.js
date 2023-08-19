@@ -7,6 +7,7 @@ const passport = require("passport");
 const passportSetup = require("./config/passport-config");
 const authRoute = require("./routes/auth.routes");
 const session = require("express-session");
+const SequelizeStore = require("express-session-sequelize")(session.Store);
 const MySQLStore = require("express-mysql-session")(session);
 const cookiesession = require("cookie-session");
 const cors = require("cors");
@@ -14,12 +15,16 @@ const app = express();
 
 // express session
 
+const sessionStore = new SequelizeStore({
+  db: sequelize, // Provide your Sequelize instance
+});
+
 app.use(
   session({
     secret: process.env.secrete,
     resave: false,
     saveUninitialized: false,
-    // store:new SequelizeStore({db:sequelize})
+    store: sessionStore,
   })
 );
 
